@@ -109,7 +109,7 @@ class UserComponent extends Component
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $id,
             'phone' => 'required|string|max:255',
-            'new_role' => 'required',
+            
             'NewPassword' => 'nullable|string|min:6',
         ]);
 
@@ -121,11 +121,7 @@ class UserComponent extends Component
         $user->last_name = $data['last_name'];
         $user->email = $data['email'];
         $user->phone = $data['phone'];
-        if ($data['new_role'] == 'user') {
-            $user->type = 0;
-        } elseif ($data['new_role'] == 'admin') {
-            $user->type = 1;
-        }
+        
 
         // Only update the password if a new one was provided
         if (!empty($this->NewPassword)) {
@@ -147,6 +143,7 @@ class UserComponent extends Component
         }
 
         // Fetch updated user list and assign it to $users
+        $this->NewPassword = null;
         $this->users = User::all();
 
         // Close the modal after updating the record

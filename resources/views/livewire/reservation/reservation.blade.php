@@ -6,7 +6,11 @@
             <!-- main-content-wrap -->
             <div class="main-content-wrap">
                 <div class="flex items-center flex-wrap justify-between gap20 mb-27">
+                    @if(auth()->user()->type == 'admin')
                     <h3>Reservations</h3>
+                    @else
+                    <h3>My Reservations</h3>
+                    @endif
                     <!-- Success Message -->
                     @if (session()->has('message'))
                     <div class="alert alert-success">
@@ -348,7 +352,7 @@
                                             @php
 
                                             $i = 1;
-                                           
+
                                             @endphp
 
                                             @foreach ($reservationOngoing as $reservation)
@@ -473,7 +477,7 @@
                                             @php
 
                                             $i = 1;
-                                         
+
                                             @endphp
 
                                             @foreach ($reservationCompleted as $reservation)

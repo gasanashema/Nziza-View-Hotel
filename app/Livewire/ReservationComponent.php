@@ -64,12 +64,26 @@ class ReservationComponent extends Component
         $this->categories = RoomCategory::all();
         $this->rooms = collect();  // Initially empty
         $this->clients = Client::all();
-        $this->reservations = Reservation::orderBy('created_at', 'desc')->get();
-        $this->reservationOngoing = Reservation::whereDate('check_in_date', '<=', $this->currentDate)
-        ->whereDate('check_out_date', '>=', $this->currentDate)->orderBy('created_at', 'desc')
-        ->get();
-        $this->reservationCompleted = Reservation::whereDate('check_out_date', '<', $this->currentDate)->orderBy('created_at', 'desc')->get();
-        $this->reservationPending = Reservation::whereDate('check_in_date', '>', $this->currentDate)->orderBy('created_at', 'desc')->get();
+        if (auth()->user()->type == 'admin') {
+            $this->reservations = Reservation::orderBy('created_at', 'desc')->get();
+            $this->reservationOngoing = Reservation::whereDate('check_in_date', '<=', $this->currentDate)
+                ->whereDate('check_out_date', '>=', $this->currentDate)->orderBy('created_at', 'desc')
+                ->get();
+            $this->reservationCompleted = Reservation::whereDate('check_out_date', '<', $this->currentDate)->orderBy('created_at', 'desc')->get();
+            $this->reservationPending = Reservation::whereDate('check_in_date', '>', $this->currentDate)->orderBy('created_at', 'desc')->get();
+        } else {
+            $this->reservations = Reservation::orderBy('created_at', 'desc')->where('user_id', auth()->user()->id)->get();
+            $this->reservationOngoing = Reservation::whereDate('check_in_date', '<=', $this->currentDate)
+                ->whereDate('check_out_date', '>=', $this->currentDate)->orderBy('created_at', 'desc')
+                ->where('user_id', auth()->user()->id)
+                ->get();
+            $this->reservationCompleted = Reservation::whereDate('check_out_date', '<', $this->currentDate)->orderBy('created_at', 'desc')
+                ->where('user_id', auth()->user()->id)
+                ->get();
+            $this->reservationPending = Reservation::whereDate('check_in_date', '>', $this->currentDate)->orderBy('created_at', 'desc')
+                ->where('user_id', auth()->user()->id)
+                ->get();
+        }
         $this->price = 0;
     }
 
@@ -141,7 +155,7 @@ class ReservationComponent extends Component
         ]);
 
         try {
-            
+
             // Create a new reservation
             $reservation = new Reservation();
             $reservation->room_id = $this->selectedRoom;
@@ -149,19 +163,34 @@ class ReservationComponent extends Component
             $reservation->check_in_date = Carbon::parse($this->CheckInDate);
             $reservation->check_out_date = Carbon::parse($this->CheckOutDate);
             $reservation->price = $this->price; // Ensure that this is calculated correctly before saving
-         
+
             $reservation->payment_status = $this->payment_status;
             $reservation->user_id = Auth::id();
 
             $reservation->save();
-            
+
             $this->currentDate = Carbon::now();
-            $this->reservations = Reservation::orderBy('created_at', 'desc')->get();
-            $this->reservationOngoing = Reservation::whereDate('check_in_date', '<=', $this->currentDate)
-            ->whereDate('check_out_date', '>=', $this->currentDate)->orderBy('created_at', 'desc')
-            ->get();
-            $this->reservationCompleted = Reservation::whereDate('check_out_date', '<', $this->currentDate)->orderBy('created_at', 'desc')->get();
-            $this->reservationPending = Reservation::whereDate('check_in_date', '>', $this->currentDate)->orderBy('created_at', 'desc')->get();
+            if (auth()->user()->type == 'admin') {
+                $this->reservations = Reservation::orderBy('created_at', 'desc')->get();
+                $this->reservationOngoing = Reservation::whereDate('check_in_date', '<=', $this->currentDate)
+                    ->whereDate('check_out_date', '>=', $this->currentDate)->orderBy('created_at', 'desc')
+                    ->get();
+                $this->reservationCompleted = Reservation::whereDate('check_out_date', '<', $this->currentDate)->orderBy('created_at', 'desc')->get();
+                $this->reservationPending = Reservation::whereDate('check_in_date', '>', $this->currentDate)->orderBy('created_at', 'desc')->get();
+            } else {
+                $this->reservations = Reservation::orderBy('created_at', 'desc')->where('user_id', auth()->user()->id)->get();
+                $this->reservationOngoing = Reservation::whereDate('check_in_date', '<=', $this->currentDate)
+                    ->whereDate('check_out_date', '>=', $this->currentDate)->orderBy('created_at', 'desc')
+                    ->where('user_id', auth()->user()->id)
+                    ->get();
+                $this->reservationCompleted = Reservation::whereDate('check_out_date', '<', $this->currentDate)->orderBy('created_at', 'desc')
+                    ->where('user_id', auth()->user()->id)
+                    ->get();
+                $this->reservationPending = Reservation::whereDate('check_in_date', '>', $this->currentDate)->orderBy('created_at', 'desc')
+                    ->where('user_id', auth()->user()->id)
+                    ->get();
+            }
+
 
             // Clear form data after saving
             $this->resetInput();
@@ -236,7 +265,7 @@ class ReservationComponent extends Component
             }
 
             // Check if the reservation dates are feasible
-            
+
 
             // Update reservation details
             $reservation->room_id = $this->selectedRoom;

@@ -6,7 +6,7 @@
             <!-- main-content-wrap -->
             <div class="main-content-wrap">
                 <div class="flex items-center flex-wrap justify-between gap20 mb-27">
-                    <h3>Rooms Category</h3>
+
                     <!-- Success Message -->
                     @if (session()->has('message'))
                     <div class="alert alert-success">
@@ -26,28 +26,11 @@
                 <div class="wg-box">
                     <div class="flex items-center justify-between gap10 flex-wrap">
                         <div class="wg-filter flex-grow">
-                            <div class="show">
-                                <div class="text-tiny">Showing</div>
-                                <div class="select">
-                                    <select class="">
-                                        <option>10</option>
-                                        <option>20</option>
-                                        <option>30</option>
-                                    </select>
-                                </div>
-                                <div class="text-tiny">entries</div>
-                            </div>
-
-                            <form class="form-search">
-                                <fieldset class="name">
-                                    <input type="text" placeholder="Search here..." class="" name="name" tabindex="2" value="" aria-required="true" required="">
-                                </fieldset>
-                                <div class="button-submit">
-                                    <button class="" type="submit"><i class="icon-search"></i></button>
-                                </div>
-                            </form>
+                            <h3>Room Categories</h3>
                         </div>
+                        @if(auth()->user()->type == 'admin')
                         <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight1" class="tf-button style-1 w208"><i class="icon-plus"></i>New</a>
+                        @endif
                     </div>
                     <div class="wg-table table-countries wrap-checkbox">
                         <ul class="table-title flex gap20 mb-14">
@@ -66,10 +49,11 @@
                             <li>
                                 <div class="body-title">Price/Night</div>
                             </li>
-
+                            @if (auth()->user()->type == 'admin')
                             <li>
                                 <div class="body-title">Action</div>
                             </li>
+                            @endif
                         </ul>
                         <ul class="flex flex-column">
                             @php
@@ -85,7 +69,7 @@
                                 <div class="body-text">{{ $category->category_title }}</div>
                                 <div class="body-text">{{ $category->detail }}</div>
                                 <div class="body-text">$ {{ $category->price_per_night }}</div>
-
+                                @if (auth()->user()->type == 'admin')
                                 <div>
                                     <div class="list-icon-function">
                                         <div class="item edit">
@@ -97,31 +81,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             </li>
                             @endforeach
                         </ul>
                     </div>
-                    <div class="divider"></div>
-                    <div class="flex items-center justify-between flex-wrap gap10">
-                        <div class="text-tiny">Showing 10 to 16 in 16 records</div>
-                        <ul class="wg-pagination">
-                            <li>
-                                <a href="#"><i class="icon-chevron-left"></i></a>
-                            </li>
-                            <li>
-                                <a href="#">1</a>
-                            </li>
-                            <li class="active">
-                                <a href="#">2</a>
-                            </li>
-                            <li>
-                                <a href="#">3</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="icon-chevron-right"></i></a>
-                            </li>
-                        </ul>
-                    </div>
+                    
                 </div>
                 <!-- /countries -->
             </div>

@@ -8,9 +8,7 @@ use App\Livewire\RoomComponent;
 use App\Livewire\RoomCategoryComponent;
 use App\Livewire\ClientComponent;
 use App\Livewire\ReservationComponent;
-// use App\Livewire\NewreservationComponent;
-// use App\Livewire\EditreservationComponent;
-
+use App\Livewire\UserProfileCompnent;
 use App\Livewire\UserComponent;
 use App\Livewire\ReportComponent;
 
@@ -63,12 +61,11 @@ Route::middleware(['auth'])->group(function () {
 
     // Reservations Route
     Route::get('/reservation', ReservationComponent::class)->name('reservation');
-    // New reservation
-    // Route::get('/new-reservation', NewreservationComponent::class)->name('new.reservation');
-    // Edit reservation
-    // Route::get('/edit-reservation/{id}', EditreservationComponent::class)->name('edit.reservation');
+
     // User Route
     Route::get('/user', UserComponent::class)->name('user');
+
+    Route::get('/profile', UserProfileCompnent::class)->name('profile');
 
     // Reports Route
     Route::get('/reports', ReportComponent::class)->name('reports');

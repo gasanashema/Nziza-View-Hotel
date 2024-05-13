@@ -39,6 +39,14 @@
                         <ul class="dropdown-menu dropdown-menu-end has-content" aria-labelledby="dropdownMenuButton3">
 
                             <li>
+                                <a wire:navigate href="/profile" class="user-item">
+                                    <div class="icon">
+                                        <i class="icon-contact"></i>
+                                    </div>
+                                    <div class="body-title-2">Profile</div>
+                                </a>
+                            </li>
+                            <li>
                                 <a wire:navigate href="/logout" class="user-item">
                                     <div class="icon">
                                         <i class="icon-log-out"></i>

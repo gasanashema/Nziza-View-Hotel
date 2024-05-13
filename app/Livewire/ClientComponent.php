@@ -36,6 +36,7 @@ class ClientComponent extends Component
     public function mount()
     {
         // Fetch all clients from the database
+        
         $this->clients = Client::all();
     }
 

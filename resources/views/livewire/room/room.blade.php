@@ -47,7 +47,9 @@
                                 </div>
                             </form>
                         </div>
+                        @if(auth()->user()->type == 'admin')
                         <a href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight1" aria-controls="offcanvasRight1" class="tf-button style-1 w208"><i class="icon-plus"></i>New</a>
+                        @endif
                     </div>
                     <div class="wg-table table-countries wrap-checkbox">
                         <ul class="table-title flex gap20 mb-14">
@@ -66,10 +68,11 @@
                             <li>
                                 <div class="body-title">Room Category</div>
                             </li>
-
+                            @if(auth()->user()->type == 'admin')
                             <li>
                                 <div class="body-title">Action</div>
                             </li>
+                            @endif
                         </ul>
                         <ul class="flex flex-column">
                             @php
@@ -85,7 +88,7 @@
                                 <div class="body-text">{{ $room->title }}</div>
                                 <div class="body-text">{{ $room->details }}</div>
                                 <div class="body-text">{{ $room->roomCategory->category_title }}</div>
-
+                                @if (auth()->user()->type == 'admin')
                                 <div>
                                     <div class="list-icon-function">
                                         <div class="item edit">
@@ -96,6 +99,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             </li>
                             @endforeach
                         </ul>

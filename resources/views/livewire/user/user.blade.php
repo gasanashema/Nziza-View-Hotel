@@ -249,16 +249,6 @@
                             <input type="tel" wire:model="phone" placeholder="Enter phone number" required>
                         </fieldset>
 
-                        <fieldset class="email mb-24">
-                            <div class="body-title mb-10">Role <span class="tf-color-1">*</span></div>
-                            <div class="select">
-                                <select wire:model="role" required>
-                                    <option>Choose user role</option>
-                                    <option value="1">Admin</option>
-                                    <option value="0">Receptionist</option>
-                                </select>
-                            </div>
-                        </fieldset>
                         <fieldset class="password mb-24">
                             <div class="body-title mb-10">New Password</div>
                             <input type="text" wire:model="NewPassword" placeholder="Enter password">
