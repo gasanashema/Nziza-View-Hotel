@@ -10,11 +10,15 @@ class Client extends Model
     use HasFactory;
 
 
-     protected $fillable = ['names', 'gender', 'phone', 'nationality', 'id_number', 'passport_number'];
-        
-        // reservation
-        public function reservations()
-        {
-            return $this->hasMany(Reservation::class);
-        }
+    protected $fillable = ['names', 'gender', 'phone', 'nationality', 'id_number', 'passport_number'];
+
+    // reservation
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

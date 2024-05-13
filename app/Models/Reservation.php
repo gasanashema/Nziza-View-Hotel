@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     use HasFactory;
+
+    protected $dates = ['check_in_date', 'check_out_date'];
     public function user()
     {
         return $this->belongsTo(User::class);

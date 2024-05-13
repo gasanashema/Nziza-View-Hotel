@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Client;
+use Illuminate\Support\Facades\Auth;
 
 class ClientComponent extends Component
 {
@@ -44,11 +45,10 @@ class ClientComponent extends Component
         return view('livewire.client.client', ['clients' => $this->clients])->layout('livewire.layout.base');
     }
 
-     // Save function to update the category details
+    // Save function to update the category details
     public function save()
     {
-      
-         $validated = $this->validate([
+        $validated = $this->validate([
             'names' => 'required|max:255',
             'gender' => 'required|max:255',
             'phone' => 'required|max:30',
@@ -57,19 +57,22 @@ class ClientComponent extends Component
             'passport_number' => 'max:200',
         ]);
 
+        // Set the user_id to the authenticated user's ID
+        $validated['user_id'] = Auth::id();
 
-      
-
+        // Create a new Client instance with the validated data
         Client::create($validated);
 
-        // Fetch updated room list and assign it to $rooms
+        // Fetch updated client list and assign it to $clients
         $this->clients = Client::all();
 
-        $this->reset(['names', 'gender', 'phone','nationality','id_number','passport_number']);
+        // Reset form fields
+        $this->reset(['names', 'gender', 'phone', 'nationality', 'id_number', 'passport_number']);
 
         // Flash a success message
-        session()->flash('message', 'Client  successfully added.');
+        session()->flash('message', 'Client successfully added.');
     }
+
 
     public function edit($id)
     {

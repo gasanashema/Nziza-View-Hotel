@@ -23,7 +23,7 @@ class UsersTableSeeder extends Seeder
                 'first_name' => 'Admin',
                 'last_name' => 'User',
                 'phone' => '000-000-0000',
-                'email' => 'admin@nziza.com',
+                'email' => 'admin@nzizaviewhotel.com',
                 'password' => Hash::make('admin'),
                 'type' => 1, // Assuming 1 is for admin
                 'created_at' => $currentDateTime,
@@ -33,7 +33,7 @@ class UsersTableSeeder extends Seeder
                 'first_name' => 'Receptionist',
                 'last_name' => 'User',
                 'phone' => '000-000-0001',
-                'email' => 'user@nziza.com',
+                'email' => 'user@nzizaviewhotel.com',
                 'password' => Hash::make('user'),
                 'type' => 0, // Assuming 0 is for regular users
                 'created_at' => $currentDateTime,

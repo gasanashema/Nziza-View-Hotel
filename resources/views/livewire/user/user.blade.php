@@ -21,6 +21,12 @@
                         {{ session('error') }}
                     </div>
                     @endif
+                    <!-- Info Message -->
+                    @if (session()->has('error'))
+                    <div class="alert alert-info">
+                        {{ session('error') }}
+                    </div>
+                    @endif
 
                 </div>
                 <!-- countries -->
@@ -97,7 +103,7 @@
                                     <td>
                                         <div class="list-icon-function">
                                             <div class="item edit">
-                                                <a href="#" data-bs-toggle="offcanvas" data-bs-target="#canvasRight{{ $user->id }}" aria-controls="canvasRight{{ $user->id }}" class="text-success" wire:click="edit({{ $user->id }})"><i class="icon-edit-3"></i></a>
+                                                <a href="#" class="text-success" wire:click="edit({{ $user->id }})"><i class="icon-edit-3"></i></a>
                                             </div>
                                             <div class="item trash">
                                                 <a href="#" class="text-danger"><i class="icon-trash-2"></i></a>
@@ -110,27 +116,7 @@
 
                         </table>
                     </div>
-                    <div class="divider"></div>
-                    <div class="flex items-center justify-between flex-wrap gap10">
-                        <div class="text-tiny">Showing 10 to 16 in 16 records</div>
-                        <ul class="wg-pagination">
-                            <li>
-                                <a href="#"><i class="icon-chevron-left"></i></a>
-                            </li>
-                            <li>
-                                <a href="#">1</a>
-                            </li>
-                            <li class="active">
-                                <a href="#">2</a>
-                            </li>
-                            <li>
-                                <a href="#">3</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="icon-chevron-right"></i></a>
-                            </li>
-                        </ul>
-                    </div>
+
                 </div>
                 <!-- /countries -->
             </div>
@@ -204,7 +190,90 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+    <style>
+        /* Add this to your CSS file or style section */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Adjust transparency as needed */
+            z-index: 9999;
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+        }
+
+        .modal-dialog {
+            z-index: 10001;
+            max-width: 80%;
+        }
+    </style>
+    @if($isOpen)
+    <div class="modal-overlay" wire:click="closeModal"></div>
+    <div class="modal p-3 curved" tabindex="-1" role="dialog" style="display: block;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title p-2">Edit</h5>
+                    <button type="button" style="background-color: transparent;" aria-label="Close" wire:click="closeModal">
+                        X
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form wire:submit.prevent="update({{$user_id}})">
+                        <fieldset class="name mb-24">
+                            <div class="body-title mb-10">First Name <span class="tf-color-1">*</span></div>
+                            <input type="text" wire:model="first_name" placeholder="Enter first name" required>
+                        </fieldset>
+
+                        <fieldset class="name mb-24">
+                            <div class="body-title mb-10">Last Name <span class="tf-color-1">*</span></div>
+                            <input type="text" wire:model="last_name" placeholder="Enter last name" required>
+                        </fieldset>
+
+                        <fieldset class="email mb-24">
+                            <div class="body-title mb-10">Email <span class="tf-color-1">*</span></div>
+                            <input type="email" wire:model="email" placeholder="Enter email address" required>
+                        </fieldset>
+
+                        <fieldset class="name mb-24">
+                            <div class="body-title mb-10">Phone <span class="tf-color-1">*</span></div>
+                            <input type="tel" wire:model="phone" placeholder="Enter phone number" required>
+                        </fieldset>
+
+                        <fieldset class="email mb-24">
+                            <div class="body-title mb-10">Role <span class="tf-color-1">*</span></div>
+                            <div class="select">
+                                <select wire:model="role" required>
+                                    <option>Choose user role</option>
+                                    <option value="1">Admin</option>
+                                    <option value="0">Receptionist</option>
+                                </select>
+                            </div>
+                        </fieldset>
+                        <fieldset class="password mb-24">
+                            <div class="body-title mb-10">New Password</div>
+                            <input type="text" wire:model="NewPassword" placeholder="Enter password">
+                        </fieldset>
+
+                        <div class="bot d-flex">
+                            <button class="tf-button w208" type="submit">Save</button>
+                            <button class="tf-button w208" type="reset">Clear</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 
 
 </div>
