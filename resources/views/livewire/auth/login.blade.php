@@ -13,7 +13,7 @@
     <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
     <title>Nziza View Hotel</title>
 
-    <meta name="author" content="themesflat.com">
+    <meta name="author" content="theclickcreations.com">
 
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -106,7 +106,7 @@
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/bootstrap-select.min.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
-    <script src="{{ mix('js/app.js') }}" defer></script>
+ 
     @livewireScripts
 
 </body>
