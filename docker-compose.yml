@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: nziza_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret_root_password
+      MYSQL_DATABASE: nziza_view_hotel
+      MYSQL_USER: nziza_user
+      MYSQL_PASSWORD: nziza_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -proot_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nziza_web
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      - APP_NAME="Nziza View Hotel"
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_URL=http://localhost
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=nziza_view_hotel
+      - DB_USERNAME=nziza_user
+      - DB_PASSWORD=nziza_password
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db_data:

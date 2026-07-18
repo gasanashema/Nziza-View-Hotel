@@ -1,66 +1,127 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Nziza View Hotel Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Nziza View Hotel Management System is a modern, Laravel 10 and Livewire-powered web application designed to handle hotel room reservations, room category configurations, receptionist task boards, and guest registrations.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🛠️ Technology Stack
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+*   **Framework**: Laravel v10 (PHP 8.2 compatible)
+*   **Reactive UI Components**: Livewire v3
+*   **Database**: MySQL / MariaDB (relational schema)
+*   **Front-End Build**: Vite, Bootstrap 5, Sass, Axios
+*   **Server Environment**: Apache HTTP Web Server (rewrites enabled)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📁 Project Structure
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```
+Nziza-View-Hotel/
+├── app/                       # Core PHP models, controllers, and helpers
+├── bootstrap/                 # Application caching and boot sequences
+├── config/                    # Framework configuration parameters
+├── database/                  # Schema blueprints and seeder tables
+│   ├── migrations/            # Table creation migrations
+│   └── seeders/               # Test data seeds (default credentials)
+├── public/                    # Built web assets (JS, CSS, images)
+├── resources/                 # Blade views, Sass styling, and source JS
+├── routes/                    # Routing maps (web.php endpoints)
+├── Dockerfile                 # Multi-stage container instructions
+├── docker-compose.yml         # Container configuration orchestrator
+└── docker-entrypoint.sh       # Automated container boot setup script
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🐳 Running with Docker Compose
 
-## Laravel Sponsors
+You can boot the entire hotel management application—including the database and webserver—automatically inside Docker containers.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Setup and Start:
+1. Ensure **Docker** and **Docker Compose** are installed and active.
+2. From the project root directory, launch the build:
+   ```bash
+   docker compose up --build -d
+   ```
+3. This command will automatically:
+   * Build the frontend assets using **Node.js** and **Vite**.
+   * Copy the built files, resolve **Composer** dependencies, install system libraries, and launch the Apache container.
+   * Start the MySQL database container.
+   * **Automate Boot Sequence**: The custom `docker-entrypoint.sh` script will wait for database connectivity, generate the Laravel `APP_KEY`, run migrations (`php artisan migrate`), and seed default accounts.
+4. Browse the application locally at **`http://localhost`**.
 
-### Premium Partners
+### Shut down the system:
+```bash
+docker compose down -v
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+## 🚀 How to Run the Project (Manually)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+If you prefer to run the application outside of Docker, follow these manual setup steps.
 
-## Code of Conduct
+### 📋 Prerequisites
+*   **PHP** (v8.1 or newer recommended)
+*   **MySQL Server**
+*   **Composer** (PHP dependency manager)
+*   **Node.js & npm** (Frontend compiler)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Step 1: Install Dependencies
+1. Extract or clone the code, and open a terminal in the root directory.
+2. Install PHP Composer dependencies:
+   ```bash
+   composer install
+   ```
+3. Install and compile frontend elements:
+   ```bash
+   npm install
+   npm run build
+   ```
 
-## Security Vulnerabilities
+### Step 2: Environment Configuration
+1. Duplicate `.env.example` and name the new file `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+2. Open the `.env` file and adjust your database connection parameters:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=nziza_view_hotel
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
+   ```
+3. Generate the application key:
+   ```bash
+   php artisan key:generate
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Step 3: Run Database Migrations & Seeds
+Run the migrations along with the default user seeders:
+```bash
+php artisan migrate --seed
+```
 
-## License
+### Step 4: Run the Server
+1. Serve the application locally:
+   ```bash
+   php artisan serve
+   ```
+2. Open your browser and navigate to the address logged in your terminal (usually `http://127.0.0.1:8000`).
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 🔑 Pre-seeded Testing Credentials
+
+Once the migrations and seeders execute successfully, you can sign in using these default profiles:
+
+### 1. Administrator Account
+*   **Email**: `admin@nzizaviewhotel.com`
+*   **Password**: `admin`
+
+### 2. Receptionist Account
+*   **Email**: `user@nzizaviewhotel.com`
+*   **Password**: `user`
