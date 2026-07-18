@@ -4,6 +4,26 @@ Nziza View Hotel Management System is a modern, Laravel 10 and Livewire-powered 
 
 ---
 
+## 📸 Application Screenshots
+
+### 1. Administrative Panel Dashboard
+Displays real-time KPIs for monthly reservations, booked rooms, active bookings, and total guest visitors.
+![Administrative Panel Dashboard](screenshoots/Screenshot%20from%202026-07-18%2022-08-19.png)
+
+### 2. Receptionist Dashboard View
+Tailored interface for receptionists with role-based access control, hiding system user administration fields.
+![Receptionist Dashboard View](screenshoots/Screenshot%20from%202026-07-18%2022-10-23.png)
+
+### 3. Room Reservations Manager
+Lists hotel bookings categorized by status (Pending, Ongoing, Completed) with quick links to register a new check-in.
+![Room Reservations Manager](screenshoots/Screenshot%20from%202026-07-18%2022-09-11.png)
+
+### 4. Reservations & Revenue Reports
+Generates clean report summary tables detailing guest stay dates, assigned rooms, and payments received within a chosen date range.
+![Reservations Reports](screenshoots/Screenshot%20from%202026-07-18%2022-08-54.png)
+
+---
+
 ## 🛠️ Technology Stack
 
 *   **Framework**: Laravel v10 (PHP 8.2 compatible)
